@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  email    String @unique
+  password String
+
+  // ENUM
+  role Role @default(USER)
+
+  // TIMESTAMPS
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+
+  @@index([role])
+  @@map("Users")
+}
+
+enum EventType {
+  WEDDING
+  BIRTHDAY
+  ENGAGEMENT
+  BEACH_POOL
+  ANNIVERSARY
+  BABY_SHOWER
+  MUSIC_NIGHT
+  BRAND_LAUNCH
+  GENDER_REVEAL
+  PRIVATE_PARTY
+  FAMILY_GATHERING
+  FESTIVAL_CELEBRATION
+}
+
+model Event {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  slug            String   @unique
+  title           String
+  location        String
+  reviewText      String?
+  isFeatured      Boolean  @default(false)
+  shortSummary    String
+  coverImageUrl   String
+  galleryImages   String[]
+  fullDescription String
+
+  // ENUM
+  eventType EventType
+
+  date      DateTime
+  createdAt DateTime @default(now())
+}
