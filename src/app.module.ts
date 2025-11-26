@@ -6,7 +6,6 @@ import { LoggerModule } from './logger/logger.module.js';
 import { PrismaModule } from './prisma/prisma.module.js';
 import { PortfolioModule } from './portfolio/portfolio.module.js';
 import { GlobalExceptionFilter } from './filters/global-exception/filter.js';
-import { UserModule } from './user/user.module';
 
 @Module({
   controllers: [],
@@ -21,7 +20,6 @@ import { UserModule } from './user/user.module';
     PrismaModule,
     PortfolioModule,
     ConfigModule.forRoot({ isGlobal: true }),
-    UserModule,
   ],
 })
 export class AppModule {}

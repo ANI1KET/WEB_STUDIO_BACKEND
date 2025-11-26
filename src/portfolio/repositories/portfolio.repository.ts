@@ -7,7 +7,7 @@ import { CreateEventDto } from '../dtos/create-portfolio.dto.js';
 
 @Injectable()
 export class PortfolioRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) {}
 
   findAll(): Promise<EventResponse[]> {
     return this.prisma.event.findMany();
@@ -21,8 +21,8 @@ export class PortfolioRepository {
     return this.prisma.event.create({ data });
   }
 
-  findById(id: string): Promise<EventResponse | null> {
-    return this.prisma.event.findUnique({ where: { id } });
+  findById(slug: string): Promise<EventResponse | null> {
+    return this.prisma.event.findUnique({ where: { slug } });
   }
 
   update(id: string, data: UpdateEventDto): Promise<EventResponse> {

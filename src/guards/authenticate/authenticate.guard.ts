@@ -22,11 +22,10 @@ export class AuthenticateGuard implements CanActivate {
       }
 
       req.user = {
+        id: token.id,
+        name:token.name,
         role: token.role,
         email: token.email,
-        number: token.number,
-        userId: token.userId,
-        permission: token.permission,
       };
 
       return true;

@@ -12,7 +12,7 @@ COPY prisma ./prisma
 RUN npx prisma generate
 
 COPY src ./src
-COPY tsconfig.json ./
+COPY tsconfig.build.json ./tsconfig.build.json
 
 RUN npm run build
 RUN npm prune --production

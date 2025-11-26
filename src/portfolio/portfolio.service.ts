@@ -17,8 +17,8 @@ export class PortfolioService {
     return this.portfolioRepository.remove(id);
   }
 
-  findOne(id: string): Promise<EventResponse | null> {
-    return this.portfolioRepository.findById(id);
+  findOne(slug: string): Promise<EventResponse | null> {
+    return this.portfolioRepository.findById(slug);
   }
 
   create(createEventDto: CreateEventDto): Promise<EventResponse> {

@@ -5,13 +5,18 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
   Controller,
 } from '@nestjs/common';
 
+import { Role } from '../types/types.js';
+import { Roles } from '../decorators/roles.decorator.js';
 import { PortfolioService } from './portfolio.service.js';
 import { EventResponse } from './entities/portfolio.entity.js';
 import { CreateEventDto } from './dtos/create-portfolio.dto.js';
 import { UpdateEventDto } from './dtos/update-portfolio.dto.js';
+import { RolesGuard } from '../guards/authorize/role/roles.guard.js';
+import { AuthenticateGuard } from '../guards/authenticate/authenticate.guard.js';
 
 @Controller('portfolio')
 export class PortfolioController {
@@ -23,11 +28,15 @@ export class PortfolioController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthenticateGuard, RolesGuard)
+  @Roles(Role.ADMIN)
   remove(@Param('id') id: string): Promise<EventResponse> {
     return this.portfolioService.remove(id);
   }
 
   @Patch(':id')
+  @UseGuards(AuthenticateGuard, RolesGuard)
+  @Roles(Role.ADMIN)
   update(
     @Param('id') id: string,
     @Body() updatePortfolioDto: UpdateEventDto,
@@ -41,6 +50,8 @@ export class PortfolioController {
   }
 
   @Post()
+  @UseGuards(AuthenticateGuard, RolesGuard)
+  @Roles(Role.ADMIN)
   create(@Body() createPortfolioDto: CreateEventDto): Promise<EventResponse> {
     return this.portfolioService.create(createPortfolioDto);
   }
